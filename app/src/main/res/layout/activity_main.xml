@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    tools:context=".view.main.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/grey_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/grey_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
+        android:background="@android:color/darker_gray"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/BottomNavigationViewHeight"
+        android:layout_gravity="bottom"
+        app:menu="@menu/menu_bottom_view"
+        app:labelVisibilityMode="labeled"
+        app:backgroundTint="?colorPrimary"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextColor="@color/bnv_tint_color"
+        app:itemIconTint="@color/bnv_tint_color"
+        app:itemIconSize="30dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

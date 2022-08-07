@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_signal"
+        android:title="@string/signals"
+        android:menuCategory="secondary"
+        android:icon="@drawable/antenna"/>
+
+    <item
+        android:id="@+id/bottom_provider"
+        android:title="@string/providers"
+        android:menuCategory="secondary"
+        android:icon="@drawable/provider"/>
+    <item
+        android:id="@+id/bottom_lk"
+        android:title="@string/lk"
+        android:menuCategory="secondary"
+        android:icon="@drawable/user"/>
+</menu>

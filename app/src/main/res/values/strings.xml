@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CryptoSignals</string>
+    <string name="signals">Signals</string>
+    <string name="providers">Providers</string>
+    <string name="lk">Account</string>
+    <string name="open">open : </string>
+    <string name="close">close : </string>
+    <string name="spot">Spot</string>
+    <string name="longs">Long X</string>
+    <string name="shorts">Short X</string>
+</resources>

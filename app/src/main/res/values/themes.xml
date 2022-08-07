@@ -1,0 +1,13 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="CryptoSignals" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/emerald</item>
+        <item name="colorSecondary">@color/t_blue</item>
+
+        <item name="android:navigationBarColor">?colorPrimary</item>
+        <item name="android:statusBarColor">?colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/olive</item>
+    </style>
+</resources>
