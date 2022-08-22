@@ -8,6 +8,8 @@ import org.koin.core.context.startKoin
 
 class App : Application() {
 
+    var isLogged: Boolean = false
+
     companion object {
         lateinit var instance: App
             private set

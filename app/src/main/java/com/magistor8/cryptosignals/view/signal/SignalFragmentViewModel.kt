@@ -22,7 +22,6 @@ class SignalFragmentViewModel : BaseViewModel(), SignalsContract.ViewModelInterf
     override val viewState: LiveData<SignalsContract.ViewState> = MutableLiveData()
 
     override fun onEvent(event: SignalsContract.Events) = when(event) {
-        is SignalsContract.Events.GetProviderDataFromIds -> Unit //getProviderDataFromIds(event.ids)
         is SignalsContract.Events.GetSignals -> getSignals()
     }
 

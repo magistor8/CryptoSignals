@@ -18,16 +18,13 @@ class RemoteDataSource {
 
     private val api = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder().setLenient().create()
-            )
-        )
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
         .create(Api::class.java)
 
     suspend fun getProviderDataFromIds(ids: List<String>) : List<ProviderData> = RetrofitConverter.pojoToProviderData(api.getProviderDataFromIds(ids).await())
     suspend fun getSignals(): List<SignalData> = RetrofitConverter.pojoToSignalsData(api.getSignals().await())
+    suspend fun login(login: String, password: String): String = api.login(login, password).await()
 
 }

@@ -17,10 +17,13 @@ import com.magistor8.cryptosignals.domain.repo.SignalRepo
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.scope.getOrCreateScope
+import org.koin.core.component.KoinScopeComponent
+import org.koin.core.scope.Scope
 
 const val SIGNAL_TYPE_DIALOG_FRAGMENT_TAG = "SIGNAL_TYPE_DIALOG_FRAGMENT_TAG"
 
-class SignalFragment: Fragment() {
+class SignalFragment: Fragment(), KoinScopeComponent {
 
     private var _binding: FragmentSignalsBinding? = null
     private val binding get() = _binding!!
@@ -32,7 +35,7 @@ class SignalFragment: Fragment() {
         Toast.makeText(context, throwable.message, Toast.LENGTH_SHORT).show()
     }
     private val coroutineContext = Dispatchers.Main + SupervisorJob() + coroutineExceptionHandler
-    private val scope = CoroutineScope(coroutineContext)
+    private val coroutineScope = CoroutineScope(coroutineContext)
     private var job: Job? = null
 
     private val filterSettings = object : SignalsContract.FilterSettings {
@@ -44,6 +47,7 @@ class SignalFragment: Fragment() {
 
     private val adapter : SignalAdapter by inject()
     private val repo : SignalRepo by inject()
+    override val scope: Scope by getOrCreateScope()
     private val viewModel : SignalFragmentViewModel by viewModel()
 
     override fun onCreateView(
@@ -147,7 +151,7 @@ class SignalFragment: Fragment() {
             filteredData = filteredData.filter { it.access } as MutableList<SignalData>
             val ids = filteredData.map {it.providerId.toString()}
             //Получаем данные провайдеров по айдишникам
-            job = scope.launch(coroutineExceptionHandler) {
+            job = coroutineScope.launch(coroutineExceptionHandler) {
                 var providerData = mutableListOf<ProviderData>()
                 withContext(Dispatchers.IO) {
                     providerData = repo.getProviderDataFromIds(ids.distinct()) as MutableList<ProviderData>
@@ -180,6 +184,7 @@ class SignalFragment: Fragment() {
 
     override fun onDetach() {
         job = null
+        scope.close()
         super.onDetach()
     }
 

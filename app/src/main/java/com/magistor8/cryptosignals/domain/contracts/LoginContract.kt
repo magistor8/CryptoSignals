@@ -6,28 +6,21 @@ import com.magistor8.cryptosignals.domain.entires.SignalData
 import com.magistor8.cryptosignals.domain.entires.SignalType
 import java.util.concurrent.CopyOnWriteArrayList
 
-interface SignalsContract {
+interface LoginContract {
 
     sealed interface ViewState {
         object Loading : ViewState
         data class Error(val throwable: Throwable) : ViewState
-        data class AllSignalsLoaded (val data: List<SignalData>) : ViewState
-        data class ProviderDataLoaded(val data: List<ProviderData>) : ViewState
+        data class Logged(val message: String) : ViewState
     }
 
     sealed interface Events {
-        object GetSignals : Events
+        data class Login(val login: String, val password: String) : Events
+        data class Register(val login: String, val email: String, val password: String) : Events
     }
 
     interface ViewModelInterface {
         val viewState: LiveData<ViewState>
         fun onEvent(event: Events)
-    }
-
-    interface FilterSettings {
-        var type: SignalType
-        var earned : Int
-        var signals : Int
-        var registered: Int
     }
 }
