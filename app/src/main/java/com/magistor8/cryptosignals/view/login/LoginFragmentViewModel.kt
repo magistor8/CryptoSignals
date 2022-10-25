@@ -44,12 +44,12 @@ class LoginFragmentViewModel : BaseViewModel(), LoginContract.ViewModelInterface
                 result = repository.login(login, password)
             }
             viewState.mutable().postValue(LoginContract.ViewState.Logged(result))
-            if (result == "success") loginCached(login)
+            if (result == "success") loginCached(login, password)
         }
     }
 
-    private fun loginCached(login: String) {
-        repository.loginCached(login)
+    private fun loginCached(login: String, password: String) {
+        repository.loginCached(login, password)
     }
 
     override fun onCleared() {

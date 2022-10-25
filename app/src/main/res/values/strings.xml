@@ -8,4 +8,11 @@
     <string name="spot">Spot</string>
     <string name="longs">Long X</string>
     <string name="shorts">Short X</string>
+    <string name="UNF">user not found</string>
+    <string name="PI">password incorrect</string>
+    <string name="S">success</string>
+    <string name="Loading">Загрузка</string>
+    <string name="enterLogin">enter login</string>
+    <string name="enterPassword">enter password</string>
+    <string name="loading">loading</string>
 </resources>

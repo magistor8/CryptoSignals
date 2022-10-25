@@ -1,40 +1,101 @@
 package com.magistor8.cryptosignals.view.main
 
+import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
 import com.magistor8.cryptosignals.App
 import com.magistor8.cryptosignals.view.provider.ProviderFragment
 import com.magistor8.cryptosignals.R
 import com.magistor8.cryptosignals.view.signal.SignalFragment
 import com.magistor8.cryptosignals.databinding.ActivityMainBinding
+import com.magistor8.cryptosignals.domain.contracts.MainContract
+import com.magistor8.cryptosignals.domain.repo.LoginRepo
 import com.magistor8.cryptosignals.utils.Navigation
 import com.magistor8.cryptosignals.view.login.LoginFragment
 import com.magistor8.cryptosignals.view.user.UserFragment
 import org.koin.android.ext.android.inject
+import org.koin.android.scope.getOrCreateScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinScopeComponent
 import org.koin.core.parameter.parametersOf
+import org.koin.core.scope.Scope
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KoinScopeComponent {
+
+    override val scope: Scope by getOrCreateScope()
 
     private lateinit var binding: ActivityMainBinding
     private val navigation : Navigation by inject { parametersOf(this) }
+    private val viewModel : MainActivityViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.viewState.observe(this) { state -> renderData(state) }
+
+        setBottomViewListener()
+        checkLogged()
+        loadingLayout()
+
+
+    }
+
+    private fun renderData(state: MainContract.ViewState) {
+
+        //Первая загрузка
         supportFragmentManager.beginTransaction().replace(
             R.id.container,
             SignalFragment()
         ).commit()
-        setBottomViewListener()
-        checkLogged()
+
+        when (state) {
+            is MainContract.ViewState.Error -> stateError(state.throwable.message)
+            is MainContract.ViewState.Success -> App.instance.isLogged = true
+        }
+    }
+
+    private fun stateError(message: String?) {
+        if (message == "logout") {
+            App.instance.isLogged = false
+        } else {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun loadingLayout() {
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
+        val request = ImageRequest.Builder(this)
+            .data(R.drawable.loading)
+            .crossfade(true)
+            .target(binding.loading)
+            .build()
+
+        imageLoader.enqueue(request)
     }
 
     private fun checkLogged() {
         val pref = getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
         val login = pref.getString(LOGIN, null)
+        val pass = pref.getString(PASS, null)
         login?.let {
-            App.instance.isLogged = true
+            viewModel.onEvent(MainContract.Events.CheckLogged(login, pass!!))
         }
     }
 
@@ -104,9 +165,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        scope.close()
+        super.onDestroy()
+    }
+
     companion object {
         const val SHARED_PREF = "SHARED_PREF"
         const val LOGIN = "LOGIN"
+        const val PASS = "PASS"
     }
 
 }

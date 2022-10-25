@@ -26,5 +26,6 @@ class RemoteDataSource {
     suspend fun getProviderDataFromIds(ids: List<String>) : List<ProviderData> = RetrofitConverter.pojoToProviderData(api.getProviderDataFromIds(ids).await())
     suspend fun getSignals(): List<SignalData> = RetrofitConverter.pojoToSignalsData(api.getSignals().await())
     suspend fun login(login: String, password: String): String = api.login(login, password).await()
+    suspend fun checkLogged(login: String, password: String): String = api.checkLogged(login, password).await()
 
 }

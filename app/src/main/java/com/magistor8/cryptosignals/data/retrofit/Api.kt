@@ -21,4 +21,11 @@ interface Api {
         @Field("login") login: String,
         @Field("password") password: String,
     ): Deferred<String>
+
+    @FormUrlEncoded
+    @POST("checkLogged")
+    fun checkLogged(
+        @Field("login") login: String,
+        @Field("password") password: String,
+    ): Deferred<String>
 }

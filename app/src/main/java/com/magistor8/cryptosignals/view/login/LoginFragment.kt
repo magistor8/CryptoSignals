@@ -8,10 +8,12 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.core.os.bundleOf
+import com.magistor8.cryptosignals.R
 import com.magistor8.cryptosignals.databinding.FragmentLoginBinding
 import com.magistor8.cryptosignals.domain.contracts.LoginContract
 import com.magistor8.cryptosignals.utils.Navigation
+import com.magistor8.cryptosignals.view.BaseFragment
 import com.magistor8.cryptosignals.view.user.UserFragment
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.getOrCreateScope
@@ -20,7 +22,7 @@ import org.koin.core.component.KoinScopeComponent
 import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 
-class LoginFragment: Fragment(), KoinScopeComponent {
+class LoginFragment: BaseFragment(), KoinScopeComponent {
 
     private var isRegisterField = false
     private val navigation : Navigation by inject { parametersOf(this) }
@@ -60,11 +62,11 @@ class LoginFragment: Fragment(), KoinScopeComponent {
                 val login = binding.loginEditText.text.toString()
                 val password = binding.passwordEditText.text.toString()
                 if (login == "") {
-                    binding.loginInputLayout.error = "enter login"
+                    binding.loginInputLayout.error = getString(R.string.enterLogin)
                     return@setOnClickListener
                 }
                 if (password == "") {
-                    binding.passwordInputLayout.error = "enter password"
+                    binding.passwordInputLayout.error = getString(R.string.enterPassword)
                     return@setOnClickListener
                 }
                 viewModel.onEvent(LoginContract.Events.Login(login, password))
@@ -84,16 +86,17 @@ class LoginFragment: Fragment(), KoinScopeComponent {
     private fun renderData(state: LoginContract.ViewState) {
         when(state) {
             is LoginContract.ViewState.Error -> Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()
-            is LoginContract.ViewState.Loading -> Toast.makeText(context, "Загрузка", Toast.LENGTH_SHORT).show()
+            is LoginContract.ViewState.Loading -> loadingScreen(VISIBLE)
             is LoginContract.ViewState.Logged -> loginResult(state.message)
         }
     }
 
     private fun loginResult(message: String) {
+        loadingScreen(GONE)
         when(message) {
-            "user not found" -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            "password incorrect" -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            "success" -> loginSuccess()
+            getString(R.string.UNF) -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            getString(R.string.PI) -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            getString(R.string.S) -> loginSuccess()
         }
     }
 

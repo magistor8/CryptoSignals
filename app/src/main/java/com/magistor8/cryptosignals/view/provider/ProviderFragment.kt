@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.magistor8.cryptosignals.databinding.FragmentProvidersBinding
 import com.magistor8.cryptosignals.databinding.FragmentSignalsBinding
+import com.magistor8.cryptosignals.view.BaseFragment
 
-class ProviderFragment: Fragment() {
+class ProviderFragment: BaseFragment() {
 
     private var _binding: FragmentProvidersBinding? = null
     private val binding get() = _binding!!

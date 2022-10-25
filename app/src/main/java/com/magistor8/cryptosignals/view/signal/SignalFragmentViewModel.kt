@@ -22,14 +22,14 @@ class SignalFragmentViewModel : BaseViewModel(), SignalsContract.ViewModelInterf
     override val viewState: LiveData<SignalsContract.ViewState> = MutableLiveData()
 
     override fun onEvent(event: SignalsContract.Events) = when(event) {
-        is SignalsContract.Events.GetSignals -> getSignals()
+        is SignalsContract.Events.GetSignals -> getSignals(event.setting)
     }
 
-    private fun getSignals() {
+    private fun getSignals(setting: SignalsContract.FilterSettings) {
         viewState.mutable().postValue(SignalsContract.ViewState.Loading)
         viewModelScope.launch(coroutineExceptionHandler) {
             withContext(Dispatchers.IO) {
-                val data = repository.getSignals()
+                val data = repository.getSignals(setting)
                 viewState.mutable().postValue(SignalsContract.ViewState.AllSignalsLoaded(data))
             }
         }

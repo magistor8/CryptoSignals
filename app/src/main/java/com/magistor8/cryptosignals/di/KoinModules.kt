@@ -8,6 +8,8 @@ import com.magistor8.cryptosignals.domain.repo.SignalRepo
 import com.magistor8.cryptosignals.utils.Navigation
 import com.magistor8.cryptosignals.view.login.LoginFragment
 import com.magistor8.cryptosignals.view.login.LoginFragmentViewModel
+import com.magistor8.cryptosignals.view.main.MainActivity
+import com.magistor8.cryptosignals.view.main.MainActivityViewModel
 import com.magistor8.cryptosignals.view.signal.SignalAdapter
 import com.magistor8.cryptosignals.view.signal.SignalFragment
 import com.magistor8.cryptosignals.view.signal.SignalFragmentViewModel
@@ -27,5 +29,9 @@ val myModule = module {
 
     scope<LoginFragment> {
         viewModel { LoginFragmentViewModel() }
+    }
+
+    scope<MainActivity> {
+        viewModel { MainActivityViewModel() }
     }
 }
