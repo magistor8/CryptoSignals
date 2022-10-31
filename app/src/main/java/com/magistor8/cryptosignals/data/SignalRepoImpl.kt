@@ -81,5 +81,15 @@ class SignalRepoImpl(
         }
         return sd
     }
+
+    override suspend fun getSubsId(login: String): List<Int> {
+        return dataSource.getSubsId(login)
+    }
+
+    override fun setSignalAccess(data: List<SignalData>, subsId: List<Int>) {
+        data.forEach {
+            it.access = subsId.contains(it.providerId)
+        }
+    }
 }
 

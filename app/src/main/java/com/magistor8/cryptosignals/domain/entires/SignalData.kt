@@ -14,5 +14,5 @@ data class SignalData(
     val target1: Double,
     val target2: Double,
     val target3: Double,
-    val access: Boolean
+    var access: Boolean
 )

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -168,5 +169,54 @@
         android:text="sign out"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_set" />
+
+    <View
+        android:id="@+id/balance_card"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_bal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="balance:"
+        android:textColor="@color/olive"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/balance_card"
+        app:layout_constraintTop_toTopOf="@+id/balance_card"
+        app:layout_constraintStart_toStartOf="@+id/balance_card"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_bal"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:padding="2dp"
+        android:src="@drawable/dollar"
+        android:tint="@color/olive"
+        app:layout_constraintEnd_toStartOf="@+id/bal"
+        app:layout_constraintBottom_toBottomOf="@+id/balance_card"
+        app:layout_constraintTop_toTopOf="@+id/balance_card"/>
+
+    <TextView
+        android:id="@+id/bal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="0.00"
+        android:textColor="@color/olive"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/balance_card"
+        app:layout_constraintTop_toTopOf="@+id/balance_card"
+        app:layout_constraintEnd_toEndOf="@+id/balance_card"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

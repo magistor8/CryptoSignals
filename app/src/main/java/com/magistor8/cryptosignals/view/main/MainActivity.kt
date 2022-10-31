@@ -91,11 +91,10 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
     }
 
     private fun checkLogged() {
-        val pref = getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
-        val login = pref.getString(LOGIN, null)
-        val pass = pref.getString(PASS, null)
+        val login = App.instance.getLogin()
+        val pass = App.instance.getPassword()
         login?.let {
-            viewModel.onEvent(MainContract.Events.CheckLogged(login, pass!!))
+            viewModel.onEvent(MainContract.Events.CheckLogged(login, pass ?: ""))
         }
     }
 
@@ -171,7 +170,6 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
     }
 
     companion object {
-        const val SHARED_PREF = "SHARED_PREF"
         const val LOGIN = "LOGIN"
         const val PASS = "PASS"
     }

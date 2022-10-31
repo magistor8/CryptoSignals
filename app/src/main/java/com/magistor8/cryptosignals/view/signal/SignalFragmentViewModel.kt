@@ -3,6 +3,7 @@ package com.magistor8.cryptosignals.view.signal
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.magistor8.cryptosignals.App
 import com.magistor8.cryptosignals.domain.BaseViewModel
 import com.magistor8.cryptosignals.domain.contracts.SignalsContract
 import com.magistor8.cryptosignals.domain.repo.SignalRepo
@@ -29,7 +30,9 @@ class SignalFragmentViewModel : BaseViewModel(), SignalsContract.ViewModelInterf
         viewState.mutable().postValue(SignalsContract.ViewState.Loading)
         viewModelScope.launch(coroutineExceptionHandler) {
             withContext(Dispatchers.IO) {
-                val data = repository.getSignals(setting)
+                var data = repository.getSignals(setting)
+                val subsId = repository.getSubsId(App.instance.getLogin() ?: "")
+                repository.setSignalAccess(data, subsId)
                 viewState.mutable().postValue(SignalsContract.ViewState.AllSignalsLoaded(data))
             }
         }

@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@color/back"
     android:paddingBottom="30px"
+    android:paddingTop="10dp"
     android:columnCount="2">
 
     <com.google.android.material.chip.Chip

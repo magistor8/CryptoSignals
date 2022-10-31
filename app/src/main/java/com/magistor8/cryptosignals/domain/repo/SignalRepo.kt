@@ -10,4 +10,6 @@ interface SignalRepo {
     suspend fun getSignals(setting: SignalsContract.FilterSettings) : List<SignalData>
     suspend fun filterSignalData(setting: SignalsContract.FilterSettings, signals: List<SignalData>): List<SignalData>
     fun filterByProviderData(signalData: List<SignalData>, providerData: List<ProviderData>, setting: SignalsContract.FilterSettings): List<SignalData>
+    suspend fun getSubsId(login: String): List<Int>
+    fun setSignalAccess(data: List<SignalData>, subsId: List<Int>)
 }

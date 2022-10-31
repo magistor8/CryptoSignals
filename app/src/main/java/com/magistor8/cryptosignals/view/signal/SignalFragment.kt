@@ -58,7 +58,7 @@ class SignalFragment: BaseFragment(), KoinScopeComponent {
         binding.recyclerview.layoutManager = LinearLayoutManager(context)
 
         //Загружаем данные сигналов
-        testData()
+        getData()
         //Фильтр по типу сигнала
         signalTypeClick()
         //Фильтр по провайдеру
@@ -68,7 +68,7 @@ class SignalFragment: BaseFragment(), KoinScopeComponent {
         viewModel.viewState.observe(viewLifecycleOwner) { state -> renderData(state) }
     }
 
-    private fun testData() {
+    private fun getData() {
         //Получаем тестовые данные
         viewModel.onEvent(SignalsContract.Events.GetSignals(filterSettings))
     }

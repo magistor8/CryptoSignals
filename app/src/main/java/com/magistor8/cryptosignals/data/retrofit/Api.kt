@@ -2,6 +2,7 @@ package com.magistor8.cryptosignals.data.retrofit
 
 import com.magistor8.cryptosignals.data.retrofit.entires.ProviderDataPOJO
 import com.magistor8.cryptosignals.data.retrofit.entires.SignalsDataPOJO
+import com.magistor8.cryptosignals.data.retrofit.entires.SubsDataPOJO
 import kotlinx.coroutines.Deferred
 import retrofit2.http.*
 
@@ -14,6 +15,12 @@ interface Api {
 
     @GET("getSignals")
     fun getSignals(): Deferred<List<SignalsDataPOJO>>
+
+    @FormUrlEncoded
+    @POST("getSubsById")
+    fun getSubsById(
+        @Field("login") login: String
+    ): Deferred<List<SubsDataPOJO>>
 
     @FormUrlEncoded
     @POST("login")

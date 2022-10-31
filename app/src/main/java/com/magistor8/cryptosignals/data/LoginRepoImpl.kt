@@ -3,11 +3,11 @@ package com.magistor8.cryptosignals.data
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.magistor8.cryptosignals.App
+import com.magistor8.cryptosignals.App.Companion.SHARED_PREF
 import com.magistor8.cryptosignals.data.retrofit.RemoteDataSource
 import com.magistor8.cryptosignals.domain.repo.LoginRepo
 import com.magistor8.cryptosignals.view.main.MainActivity.Companion.LOGIN
 import com.magistor8.cryptosignals.view.main.MainActivity.Companion.PASS
-import com.magistor8.cryptosignals.view.main.MainActivity.Companion.SHARED_PREF
 
 class LoginRepoImpl(
     private val dataSource: RemoteDataSource,
