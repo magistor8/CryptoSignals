@@ -10,5 +10,6 @@ data class ProviderData(
     val earnAll: Int,
     val signals30: Int,
     val signalsAll: Int,
-    val access: Boolean
+    val access: Boolean,
+    val subPeriod: Int
 )

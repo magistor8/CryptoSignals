@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    app:layout_constraintTop_toBottomOf="@id/cheap_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    android:layout_marginTop="10dp"
+    android:backgroundTint="?colorPrimary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:padding="2dp"
+            android:src="@drawable/user"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/sub_container"/>
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MAGISTOR8"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/pay_info"
+            app:layout_constraintStart_toStartOf="@+id/pay_info"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="registered 20 days ago"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/signals_info"
+            app:layout_constraintTop_toTopOf="@+id/username" />
+
+        <View
+            android:id="@+id/pay_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/corners"
+            app:layout_constraintBottom_toTopOf="@+id/sub_container"
+            app:layout_constraintEnd_toStartOf="@+id/signals_info"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/pay7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="earned in 7 days"
+            android:textSize="8sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/pay30"
+            app:layout_constraintStart_toStartOf="@+id/pay_info"
+            app:layout_constraintTop_toTopOf="@+id/pay_info" />
+
+        <TextView
+            android:id="@+id/pay7_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="27%"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/pay7"
+            app:layout_constraintStart_toEndOf="@+id/payall"
+            app:layout_constraintTop_toTopOf="@+id/pay7" />
+
+        <TextView
+            android:id="@+id/pay30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="earned in 30 days"
+            android:textSize="8sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/payall"
+            app:layout_constraintStart_toStartOf="@+id/pay_info"
+            app:layout_constraintTop_toBottomOf="@+id/pay7"/>
+
+        <TextView
+            android:id="@+id/pay30_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="146%"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/pay30"
+            app:layout_constraintStart_toEndOf="@+id/payall"
+            app:layout_constraintTop_toTopOf="@+id/pay30" />
+
+        <TextView
+            android:id="@+id/payall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="earned for all time"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/pay_info"
+            app:layout_constraintStart_toStartOf="@+id/pay_info"
+            app:layout_constraintTop_toBottomOf="@+id/pay30" />
+
+        <TextView
+            android:id="@+id/payall_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2458%"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/payall"
+            app:layout_constraintStart_toEndOf="@+id/payall"
+            app:layout_constraintTop_toTopOf="@+id/payall" />
+
+        <View
+            android:id="@+id/signals_info"
+            android:background="@drawable/corners"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/sub_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pay_info"
+            app:layout_constraintTop_toBottomOf="@+id/username" />
+
+        <TextView
+            app:layout_constrainedWidth="true"
+            android:gravity="center"
+            android:id="@+id/signals_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="number of signals in 30 days / total"
+            android:textSize="8sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintStart_toStartOf="@+id/signals_info"
+            app:layout_constraintTop_toTopOf="@+id/signals_info"
+            app:layout_constraintEnd_toEndOf="@+id/signals_info"/>
+
+        <TextView
+            android:id="@+id/signals_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14/186"
+            android:textColor="@android:color/holo_green_dark"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/signals_info"
+            app:layout_constraintStart_toStartOf="@+id/signals_info"
+            app:layout_constraintTop_toBottomOf="@+id/signals_text" />
+
+        <FrameLayout
+            android:id="@+id/sub_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sub"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Subscribe"
+                android:textColor="@color/olive"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:strokeColor="@color/olive"
+                app:strokeWidth="2dp" />
+
+            <TextView
+                android:id="@+id/sub_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="you subscribed before 12/29/2023"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pay_info" />
+
+        </FrameLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

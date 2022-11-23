@@ -96,7 +96,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="?colorPrimary"
             android:textAlignment="center"
-            android:text="LOGIN"/>
+            android:text="LOGIN"
+            android:textColor="@color/olive"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="0.5"

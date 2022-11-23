@@ -53,7 +53,8 @@ object RetrofitConverter {
                 it.earnAll.toInt(),
                 it.signals30.toInt(),
                 it.signalsAll.toInt(),
-                true
+                true,
+                0
             ))
         }
         return newList

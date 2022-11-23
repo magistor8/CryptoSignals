@@ -1,5 +1,7 @@
 package com.magistor8.cryptosignals.view.user
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ class BalanceDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = BalanceDialogFragmentBinding.inflate(layoutInflater, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
     }
 

@@ -110,22 +110,12 @@ class SignalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun signalType(type: SignalType) {
+            val color = ContextCompat.getColorStateList(context, R.color.forest)
+            binding.typeSignalB.backgroundTintList = color
             when (type) {
-                is SignalType.Spot -> {
-                    val color = ContextCompat.getColorStateList(context, R.color.forest)
-                    binding.typeSignalB.backgroundTintList = color
-                    binding.typeSignalT.text = context.getString(R.string.spot)
-                }
-                is SignalType.FutureLong -> {
-                    val color = ContextCompat.getColorStateList(context, R.color.t_blue)
-                    binding.typeSignalB.backgroundTintList = color
-                    binding.typeSignalT.text = context.getString(R.string.longs) + type.x
-                }
-                is SignalType.FutureShort -> {
-                    val color = ContextCompat.getColorStateList(context, R.color.t_pink)
-                    binding.typeSignalB.backgroundTintList = color
-                    binding.typeSignalT.text = context.getString(R.string.shorts) + type.x
-                }
+                is SignalType.Spot -> binding.typeSignalT.text = context.getString(R.string.spot)
+                is SignalType.FutureLong -> binding.typeSignalT.text = context.getString(R.string.longs) + type.x
+                is SignalType.FutureShort -> binding.typeSignalT.text = context.getString(R.string.shorts) + type.x
             }
         }
     }
