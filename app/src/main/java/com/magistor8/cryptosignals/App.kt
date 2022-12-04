@@ -11,6 +11,8 @@ import org.koin.core.context.startKoin
 class App : Application() {
 
     var isLogged: Boolean = false
+    val baseUri = "https://magistor8.tk/"
+    val photoUri = baseUri + "logos/"
 
     private val pref by lazy {
         getSharedPreferences(SHARED_PREF, MODE_PRIVATE)

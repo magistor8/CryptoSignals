@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,9 +64,22 @@ class SignalFragment: BaseFragment(), KoinScopeComponent {
         signalTypeClick()
         //Фильтр по провайдеру
         filterClick()
+        //Мои подписки
+        mySubs()
 
         //ЛайвДата - подписка
         viewModel.viewState.observe(viewLifecycleOwner) { state -> renderData(state) }
+    }
+
+    //Чекбокс на мои подписки
+    private fun mySubs() {
+        binding.subscr.setOnCheckedChangeListener { _, p1 ->
+            if (p1) {
+                adapter.submitList(data.filter { it.access })
+            } else {
+                adapter.submitList(data)
+            }
+        }
     }
 
     private fun getData() {
@@ -81,7 +95,12 @@ class SignalFragment: BaseFragment(), KoinScopeComponent {
             is SignalsContract.ViewState.AllSignalsLoaded -> {
                 loadingScreen(GONE)
                 data = state.data as MutableList
-                adapter.submitList(data)
+
+                if (binding.subscr.isChecked) {
+                    adapter.submitList(data.filter { it.access })
+                } else {
+                    adapter.submitList(data)
+                }
             }
             is SignalsContract.ViewState.Loading -> loadingScreen(VISIBLE)
         }

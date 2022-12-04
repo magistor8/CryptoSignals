@@ -1,12 +1,14 @@
 package com.magistor8.cryptosignals.domain.contracts
 
 import androidx.lifecycle.LiveData
+import com.magistor8.cryptosignals.domain.entires.ProviderData
 
 interface ProviderContract {
 
     sealed interface ViewState {
         object Loading : ViewState
         data class Error(val throwable: Throwable) : ViewState
+        data class ProviderDataSuccess(val data : List<ProviderData>) : ViewState
     }
 
     sealed interface Events {
@@ -20,9 +22,9 @@ interface ProviderContract {
 
     data class FilterSettings (
         var name: String,
-        var earnedPeriod : Int,
+        var earnedPeriod : String,
         var earned : Int,
-        var signalsPeriod : Int,
+        var signalsPeriod : String,
         var signals : Int,
         var registered: Int
     )

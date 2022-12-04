@@ -46,7 +46,7 @@ object RetrofitConverter {
             newList.add(ProviderData(
                 it.id.toInt(),
                 it.name,
-                it.logo,
+                App.instance.photoUri + it.logo,
                 it.registered.toInt(),
                 it.earn7.toInt(),
                 it.earn30.toInt(),

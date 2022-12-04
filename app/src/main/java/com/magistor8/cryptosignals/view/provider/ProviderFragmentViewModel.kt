@@ -32,7 +32,8 @@ class ProviderFragmentViewModel : ProviderContract.ViewModelInterface, BaseViewM
         viewState.mutable().postValue(ProviderContract.ViewState.Loading)
         viewModelScope.launch(coroutineExceptionHandler) {
             withContext(Dispatchers.IO) {
-                TODO("Остановился тут")
+                val data = repository.getData(settings)
+                viewState.mutable().postValue(ProviderContract.ViewState.ProviderDataSuccess(data))
             }
         }
     }

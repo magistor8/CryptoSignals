@@ -35,4 +35,7 @@ interface Api {
         @Field("login") login: String,
         @Field("password") password: String,
     ): Deferred<String>
+
+    @GET("getProviderData")
+    fun getProviderData(): Deferred<ProviderDataPOJO>
 }
