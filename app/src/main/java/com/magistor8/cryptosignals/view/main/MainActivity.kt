@@ -4,33 +4,30 @@ import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.navigation.NavGraph
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.get
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import com.magistor8.cryptosignals.App
-import com.magistor8.cryptosignals.view.provider.ProviderFragment
 import com.magistor8.cryptosignals.R
-import com.magistor8.cryptosignals.view.signal.SignalFragment
 import com.magistor8.cryptosignals.databinding.ActivityMainBinding
 import com.magistor8.cryptosignals.domain.contracts.MainContract
-import com.magistor8.cryptosignals.domain.repo.LoginRepo
-import com.magistor8.cryptosignals.utils.Navigation
-import com.magistor8.cryptosignals.view.login.LoginFragment
-import com.magistor8.cryptosignals.view.user.UserFragment
-import org.koin.android.ext.android.inject
 import org.koin.android.scope.getOrCreateScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinScopeComponent
-import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 
 class MainActivity : AppCompatActivity(), KoinScopeComponent {
 
-    override val scope: Scope by getOrCreateScope()
 
+    override val scope: Scope by getOrCreateScope()
     private lateinit var binding: ActivityMainBinding
-    private val navigation : Navigation by inject { parametersOf(this) }
     private val viewModel : MainActivityViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,21 +38,13 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
 
         viewModel.viewState.observe(this) { state -> renderData(state) }
 
-        setBottomViewListener()
         checkLogged()
+        setBottomViewListener()
         loadingLayout()
-
 
     }
 
     private fun renderData(state: MainContract.ViewState) {
-
-        //Первая загрузка
-        supportFragmentManager.beginTransaction().replace(
-            R.id.container,
-            SignalFragment()
-        ).commit()
-
         when (state) {
             is MainContract.ViewState.Error -> stateError(state.throwable.message)
             is MainContract.ViewState.Success -> App.instance.isLogged = true
@@ -99,69 +88,18 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
     }
 
     private fun setBottomViewListener() {
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.bottom_signal -> {
-                    navigation.navigate(
-                        SignalFragment::class.java,
-                        Navigation.Action.REPLACE,
-                        addToBS = true
-                    )
-                    return@setOnItemSelectedListener true
-                }
-                R.id.bottom_provider -> {
-                    navigation.navigate(
-                        ProviderFragment::class.java,
-                        Navigation.Action.REPLACE,
-                        addToBS = true
-                    )
-                    return@setOnItemSelectedListener true
-                }
-                R.id.bottom_lk -> {
-                    if (App.instance.isLogged) {
-                        navigation.navigate(
-                            UserFragment::class.java,
-                            Navigation.Action.REPLACE,
-                            addToBS = true
-                        )
-                    } else {
-                        navigation.navigate(
-                            LoginFragment::class.java,
-                            Navigation.Action.REPLACE,
-                            addToBS = true
-                        )
-                    }
-                    return@setOnItemSelectedListener true
-                }
-                else -> {return@setOnItemSelectedListener true}
+        val bottomNavigation = binding.bottomNavigationView
+        //Находим NavController
+        val navController = (supportFragmentManager.findFragmentById(R.id.container) as? NavHostFragment)?.navController
+        //Установим в нижнюю навигацию
+        navController?.let {
+            bottomNavigation.setupWithNavController(it)
+            if (App.instance.isLogged) {
+                val node = it.graph.findNode(R.id.userNested)
+                (node as NavGraph).setStartDestination(R.id.userFragment)
             }
         }
-        bottomNavigationViewSetup()
-    }
 
-    private fun bottomNavigationViewSetup() {
-        with(supportFragmentManager) {
-            addOnBackStackChangedListener {
-                when (findFragmentById(R.id.container)) {
-                    is SignalFragment -> binding.bottomNavigationView.menu.findItem(R.id.bottom_signal).isChecked =
-                        true
-                    is ProviderFragment -> binding.bottomNavigationView.menu.findItem(R.id.bottom_provider).isChecked =
-                        true
-                    is LoginFragment ->  {
-                        binding.bottomNavigationView.menu.findItem(R.id.bottom_lk).isChecked = true
-                        if (App.instance.isLogged) {
-                            navigation.navigate(
-                                UserFragment::class.java,
-                                Navigation.Action.REPLACE,
-                                addToBS = true
-                            )
-                        }
-                    }
-                    is UserFragment -> binding.bottomNavigationView.menu.findItem(R.id.bottom_lk).isChecked =
-                        true
-                }
-            }
-        }
     }
 
     override fun onDestroy() {
@@ -173,6 +111,7 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
         const val LOGIN = "LOGIN"
         const val PASS = "PASS"
     }
+
 
 }
 

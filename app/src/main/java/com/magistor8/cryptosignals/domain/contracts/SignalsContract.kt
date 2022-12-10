@@ -1,12 +1,15 @@
 package com.magistor8.cryptosignals.domain.contracts
 
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import com.magistor8.cryptosignals.domain.entires.ProviderData
 import com.magistor8.cryptosignals.domain.entires.SignalData
 import com.magistor8.cryptosignals.domain.entires.SignalType
+import kotlinx.android.parcel.Parcelize
 import java.util.concurrent.CopyOnWriteArrayList
 
 interface SignalsContract {
+
 
     sealed interface ViewState {
         object Loading : ViewState
@@ -16,11 +19,13 @@ interface SignalsContract {
     }
 
     sealed interface Events {
-        data class GetSignals(val setting: FilterSettings) : Events
+        data class FilterType(val type: SignalType) : Events
+        data class Filter(val earned: Int, val signals: Int, val registered: Int) : Events
     }
 
     interface ViewModelInterface {
         val viewState: LiveData<ViewState>
+        val filterSettings : FilterSettings
         fun onEvent(event: Events)
     }
 

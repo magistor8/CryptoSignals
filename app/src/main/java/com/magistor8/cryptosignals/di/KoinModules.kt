@@ -1,5 +1,6 @@
 package com.magistor8.cryptosignals.di
 
+import androidx.lifecycle.ViewModelProvider
 import com.magistor8.cryptosignals.data.LoginRepoImpl
 import com.magistor8.cryptosignals.data.ProviderRepoImpl
 import com.magistor8.cryptosignals.data.SignalRepoImpl
@@ -7,7 +8,6 @@ import com.magistor8.cryptosignals.data.retrofit.RemoteDataSource
 import com.magistor8.cryptosignals.domain.repo.LoginRepo
 import com.magistor8.cryptosignals.domain.repo.ProviderRepo
 import com.magistor8.cryptosignals.domain.repo.SignalRepo
-import com.magistor8.cryptosignals.utils.Navigation
 import com.magistor8.cryptosignals.view.login.LoginFragment
 import com.magistor8.cryptosignals.view.login.LoginFragmentViewModel
 import com.magistor8.cryptosignals.view.main.MainActivity
@@ -23,7 +23,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val myModule = module {
-    single { params -> Navigation(context = params.get()) }
+
     single { SignalAdapter() }
     single { ProviderAdapter() }
     single<SignalRepo> { SignalRepoImpl(RemoteDataSource()) }

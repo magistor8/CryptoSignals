@@ -8,24 +8,20 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.navigation.NavGraph
+import androidx.navigation.fragment.findNavController
 import com.magistor8.cryptosignals.R
 import com.magistor8.cryptosignals.databinding.FragmentLoginBinding
 import com.magistor8.cryptosignals.domain.contracts.LoginContract
-import com.magistor8.cryptosignals.utils.Navigation
 import com.magistor8.cryptosignals.view.BaseFragment
-import com.magistor8.cryptosignals.view.user.UserFragment
-import org.koin.android.ext.android.inject
 import org.koin.android.scope.getOrCreateScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinScopeComponent
-import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 
 class LoginFragment: BaseFragment(), KoinScopeComponent {
 
     private var isRegisterField = false
-    private val navigation : Navigation by inject { parametersOf(this) }
     override val scope: Scope by getOrCreateScope()
     private val viewModel : LoginFragmentViewModel by viewModel()
 
@@ -101,11 +97,11 @@ class LoginFragment: BaseFragment(), KoinScopeComponent {
     }
 
     private fun loginSuccess() {
-        navigation.navigate(
-            UserFragment::class.java,
-            Navigation.Action.REPLACE,
-            addToBS = true
-        )
+        findNavController().also {
+            val node = it.graph.findNode(R.id.userNested)
+            (node as NavGraph).setStartDestination(R.id.userFragment)
+        }
+        findNavController().navigate(R.id.action_loginFragment_to_userFragment)
     }
 
     override fun onDestroy() {

@@ -6,15 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.magistor8.cryptosignals.App
 import com.magistor8.cryptosignals.databinding.FragmentUserBinding
-import com.magistor8.cryptosignals.utils.Navigation
 import com.magistor8.cryptosignals.view.BaseFragment
-import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
 
 
 class UserFragment: BaseFragment() {
-
-    private val navigation : Navigation by inject { parametersOf(this) }
 
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!

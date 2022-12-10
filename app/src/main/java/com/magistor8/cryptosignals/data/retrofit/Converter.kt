@@ -8,7 +8,6 @@ import com.magistor8.cryptosignals.data.retrofit.entires.SubsDataPOJO
 import com.magistor8.cryptosignals.domain.entires.ProviderData
 import com.magistor8.cryptosignals.domain.entires.SignalData
 import com.magistor8.cryptosignals.domain.entires.SignalType
-import com.magistor8.cryptosignals.utils.LogosByPair
 import java.util.concurrent.CopyOnWriteArrayList
 
 object RetrofitConverter {
@@ -18,7 +17,7 @@ object RetrofitConverter {
         signals.onEach {
             newList.add(SignalData(
                     it.id.toInt(),
-                    LogosByPair.getDrawable(it.pair) ?: App.instance.applicationContext.resources.getDrawable(R.drawable.bitcoin,null),
+                App.instance.photoUri + it.pair,
                     it.pair,
                     when(it.type) {
                         "Spot" -> SignalType.Spot

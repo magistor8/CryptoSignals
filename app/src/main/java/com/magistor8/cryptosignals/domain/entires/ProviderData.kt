@@ -1,5 +1,8 @@
 package com.magistor8.cryptosignals.domain.entires
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class ProviderData(
     val id: Int,
     val name: String,

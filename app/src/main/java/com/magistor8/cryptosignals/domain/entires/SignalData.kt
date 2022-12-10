@@ -1,10 +1,11 @@
 package com.magistor8.cryptosignals.domain.entires
 
-import android.graphics.drawable.Drawable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 data class SignalData(
     val id: Int,
-    val logo: Drawable,
+    val logo: String,
     val pair: String,
     val type: SignalType,
     val providerId: Int,

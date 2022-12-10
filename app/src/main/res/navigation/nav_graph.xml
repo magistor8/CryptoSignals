@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signalFragment">
 
+    <fragment
+        android:id="@+id/signalFragment"
+        android:name="com.magistor8.cryptosignals.view.signal.SignalFragment"
+        android:label="SignalFragment" />
+    <fragment
+        android:id="@+id/providerFragment"
+        android:name="com.magistor8.cryptosignals.view.provider.ProviderFragment"
+        android:label="ProviderFragment" />
+    <navigation android:id="@+id/userNested"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.magistor8.cryptosignals.view.login.LoginFragment"
+            android:label="LoginFragment">
+            <action
+                android:id="@+id/action_loginFragment_to_userFragment"
+                app:destination="@id/userFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/userFragment"
+            android:name="com.magistor8.cryptosignals.view.user.UserFragment"
+            android:label="UserFragment" />
+    </navigation>
 </navigation>
