@@ -66,6 +66,8 @@ class ProviderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         dataList.submitList(nData.map { it.copy() })
     }
 
+    fun getData() : List<ProviderData> = dataList.currentList
+
     inner class ProviderAdapterViewHolder(private val binding: ProviderCardBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(data: ProviderData) {

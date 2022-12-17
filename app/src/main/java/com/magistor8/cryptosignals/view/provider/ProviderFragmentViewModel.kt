@@ -18,13 +18,29 @@ class ProviderFragmentViewModel : ProviderContract.ViewModelInterface, BaseViewM
     private val repository : ProviderRepo by inject()
     override val viewState: LiveData<ProviderContract.ViewState> = MutableLiveData()
 
+    override val filterSetting = ProviderContract.FilterSettings(
+    "", "", 0, "", 0, 0
+    )
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         viewState.mutable().postValue(ProviderContract.ViewState.Error(throwable))
     }
 
+    init {
+        loadData(filterSetting)
+    }
+
     override fun onEvent(event: ProviderContract.Events) {
         when(event) {
-            is ProviderContract.Events.LoadData -> loadData(event.settings)
+            is ProviderContract.Events.LoadData -> {
+                filterSetting.name = event.name
+                filterSetting.signals = event.signal
+                filterSetting.earned = event.earn
+                filterSetting.registered = event.register
+                filterSetting.signalsPeriod = event.signalPeriod
+                filterSetting.earnedPeriod = event.earnPeriod
+                loadData(filterSetting)
+            }
         }
     }
 

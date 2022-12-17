@@ -2,6 +2,7 @@ package com.magistor8.cryptosignals.domain.contracts
 
 import androidx.lifecycle.LiveData
 import com.magistor8.cryptosignals.domain.entires.ProviderData
+import com.magistor8.cryptosignals.domain.entires.Sort
 
 interface ProviderContract {
 
@@ -12,10 +13,11 @@ interface ProviderContract {
     }
 
     sealed interface Events {
-        data class LoadData(val settings: FilterSettings): Events
+        data class LoadData(val earnPeriod: String,val earn: Int,val signalPeriod: String,val signal: Int,val name: String,val register: Int): Events
     }
 
     interface ViewModelInterface {
+        val filterSetting: FilterSettings
         val viewState: LiveData<ViewState>
         fun onEvent(event: Events)
     }

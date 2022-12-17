@@ -47,7 +47,14 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
     private fun renderData(state: MainContract.ViewState) {
         when (state) {
             is MainContract.ViewState.Error -> stateError(state.throwable.message)
-            is MainContract.ViewState.Success -> App.instance.isLogged = true
+            is MainContract.ViewState.Success -> {
+                App.instance.isLogged = true
+                val navController = (supportFragmentManager.findFragmentById(R.id.container) as? NavHostFragment)?.navController
+                navController?.let {
+                    val node = it.graph.findNode(R.id.userNested)
+                    (node as NavGraph).setStartDestination(R.id.userFragment)
+                }
+            }
         }
     }
 
@@ -94,12 +101,7 @@ class MainActivity : AppCompatActivity(), KoinScopeComponent {
         //Установим в нижнюю навигацию
         navController?.let {
             bottomNavigation.setupWithNavController(it)
-            if (App.instance.isLogged) {
-                val node = it.graph.findNode(R.id.userNested)
-                (node as NavGraph).setStartDestination(R.id.userFragment)
-            }
         }
-
     }
 
     override fun onDestroy() {

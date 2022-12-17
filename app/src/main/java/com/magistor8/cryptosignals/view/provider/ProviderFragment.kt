@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.magistor8.cryptosignals.databinding.FragmentProvidersBinding
 import com.magistor8.cryptosignals.domain.contracts.ProviderContract
-import com.magistor8.cryptosignals.domain.contracts.SignalsContract
+import com.magistor8.cryptosignals.domain.entires.Sort
 import com.magistor8.cryptosignals.view.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,6 +18,7 @@ import org.koin.core.component.getOrCreateScope
 import org.koin.core.scope.Scope
 
 const val PROVIDER_TYPE_DIALOG_FRAGMENT_TAG = "PROVIDER_TYPE_DIALOG_FRAGMENT_TAG"
+const val PROVIDER_SORT_DIALOG_FRAGMENT_TAG = "PROVIDER_SORT_DIALOG_FRAGMENT_TAG"
 
 class ProviderFragment: BaseFragment(), KoinScopeComponent {
 
@@ -27,10 +28,6 @@ class ProviderFragment: BaseFragment(), KoinScopeComponent {
     private val adapter : ProviderAdapter by inject()
     override val scope: Scope by getOrCreateScope()
     private val viewModel : ProviderFragmentViewModel by viewModel()
-
-    private val filterSetting = ProviderContract.FilterSettings(
-        "", "", 0, "", 0, 0
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,14 +46,10 @@ class ProviderFragment: BaseFragment(), KoinScopeComponent {
         binding.recyclerview.layoutManager = LinearLayoutManager(context)
 
         filterClick()
+        sortClick()
 
         viewModel.viewState.observe(viewLifecycleOwner) { state -> renderData(state) }
 
-        loadData()
-    }
-
-    private fun loadData() {
-        viewModel.onEvent(ProviderContract.Events.LoadData(filterSetting))
     }
 
     private fun renderData(state: ProviderContract.ViewState) {
@@ -66,6 +59,30 @@ class ProviderFragment: BaseFragment(), KoinScopeComponent {
             is ProviderContract.ViewState.ProviderDataSuccess -> {
                 loadingScreen(View.GONE)
                 adapter.submitList(state.data)
+            }
+        }
+    }
+
+    //Сортировка
+    private fun sortClick() {
+        binding.cheapSort.setOnClickListener {
+            val providerSortDialogFragment = ProviderSortDialogFragment.newInstance()
+            providerSortDialogFragment.setOnTypeClickListener(object : ProviderSortDialogFragment.OnSortClickListener {
+                override fun onClick(sort: Sort) {
+                    val data = adapter.getData()
+                    when (sort) {
+                        Sort.ByReg -> adapter.submitList(data.sortedByDescending { it.registered })
+                        Sort.BySignals -> adapter.submitList(data.sortedByDescending { it.signalsAll })
+                        Sort.ByEarn -> adapter.submitList(data.sortedByDescending { it.earnAll })
+                        Sort.ByName -> adapter.submitList(data.sortedBy { it.name })
+                    }
+                }
+            })
+            activity?.let {
+                providerSortDialogFragment.show(
+                    it.supportFragmentManager,
+                    PROVIDER_SORT_DIALOG_FRAGMENT_TAG
+                )
             }
         }
     }
@@ -83,13 +100,7 @@ class ProviderFragment: BaseFragment(), KoinScopeComponent {
                     name: String,
                     register: Int
                 ) {
-                    filterSetting.name = name
-                    filterSetting.earnedPeriod = earnPeriod
-                    filterSetting.earned = earn
-                    filterSetting.signalsPeriod = signalPeriod
-                    filterSetting.signals = signal
-                    filterSetting.registered = register
-                    viewModel.onEvent(ProviderContract.Events.LoadData(filterSetting))
+                    viewModel.onEvent(ProviderContract.Events.LoadData(earnPeriod, earn, signalPeriod, signal, name, register))
                 }
             })
             activity?.let {

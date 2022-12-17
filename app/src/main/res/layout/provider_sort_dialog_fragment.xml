@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/back"
+    android:paddingBottom="30px"
+    android:paddingTop="10dp"
+    android:columnCount="2">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/reg"
+        android:layout_columnWeight="1"
+        android:text="by registration date"
+        android:textAlignment="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="@color/olive"/>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/sign"
+        android:layout_columnWeight="1"
+        android:text="by number of signals"
+        android:textAlignment="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="@color/olive"/>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/earn"
+        android:layout_columnWeight="1"
+        android:text="by profit"
+        android:textAlignment="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="@color/olive"/>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/name"
+        android:layout_columnWeight="1"
+        android:text="by name"
+        android:textAlignment="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="?colorPrimary"
+        android:textColor="@color/olive"/>
+
+</GridLayout>
