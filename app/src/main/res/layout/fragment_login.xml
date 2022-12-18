@@ -24,6 +24,7 @@
         app:boxCornerRadiusTopEnd="8dp"
         app:errorEnabled="true"
         app:errorTextColor="@color/t_pink"
+        app:errorIconTint="@color/t_pink"
         app:boxStrokeErrorColor="@color/t_pink">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,7 +48,11 @@
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
-        android:layout_marginBottom="10dp"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/t_pink"
+        app:errorIconTint="@color/t_pink"
+        app:boxStrokeErrorColor="@color/t_pink"
+        tools:visibility="visible"
         android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -73,6 +78,7 @@
         app:boxCornerRadiusTopEnd="8dp"
         app:errorEnabled="true"
         app:errorTextColor="@color/t_pink"
+        app:errorIconTint="@color/t_pink"
         app:boxStrokeErrorColor="@color/t_pink">
 
         <com.google.android.material.textfield.TextInputEditText

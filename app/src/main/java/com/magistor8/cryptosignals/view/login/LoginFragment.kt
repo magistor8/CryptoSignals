@@ -48,6 +48,7 @@ class LoginFragment: BaseFragment(), KoinScopeComponent {
 
     private fun setUp() {
 
+        //Логин
         binding.login.setOnClickListener {
             binding.loginInputLayout.error = null
             binding.passwordInputLayout.error = null
@@ -69,12 +70,28 @@ class LoginFragment: BaseFragment(), KoinScopeComponent {
             }
         }
 
+        //Регистрация
         binding.register.setOnClickListener {
             if (!isRegisterField) {
                 isRegisterField = true
                 binding.emailInputLayout.visibility = VISIBLE
             } else {
-                //viewModel.onEvent(LoginContract.Events.Register())
+                val login = binding.loginEditText.text.toString()
+                val password = binding.passwordEditText.text.toString()
+                val email = binding.emailEditText.text.toString()
+                if (login == "") {
+                    binding.loginInputLayout.error = getString(R.string.enterLogin)
+                    return@setOnClickListener
+                }
+                if (password == "") {
+                    binding.passwordInputLayout.error = getString(R.string.enterPassword)
+                    return@setOnClickListener
+                }
+                if (email == "") {
+                    binding.emailInputLayout.error = getString(R.string.enterEmail)
+                    return@setOnClickListener
+                }
+                viewModel.onEvent(LoginContract.Events.Register(login, email, password))
             }
         }
     }
@@ -84,6 +101,7 @@ class LoginFragment: BaseFragment(), KoinScopeComponent {
             is LoginContract.ViewState.Error -> Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()
             is LoginContract.ViewState.Loading -> loadingScreen(VISIBLE)
             is LoginContract.ViewState.Logged -> loginResult(state.message)
+            is LoginContract.ViewState.Registered -> registerResult(state.message)
         }
     }
 
@@ -92,6 +110,15 @@ class LoginFragment: BaseFragment(), KoinScopeComponent {
         when(message) {
             getString(R.string.UNF) -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             getString(R.string.PI) -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            getString(R.string.S) -> loginSuccess()
+        }
+    }
+
+    private fun registerResult(message: String) {
+        loadingScreen(GONE)
+        when(message) {
+            getString(R.string.UAC) -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            getString(R.string.EAU) -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             getString(R.string.S) -> loginSuccess()
         }
     }

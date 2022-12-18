@@ -18,7 +18,7 @@ class LoginRepoImpl(
         return dataSource.login(login, password)
     }
 
-    override fun loginCached(login: String, password: String) {
+    override suspend fun loginCached(login: String, password: String) {
         val pref = context.getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
         val editor = pref.edit()
         editor.putString(LOGIN, login)
@@ -29,6 +29,10 @@ class LoginRepoImpl(
 
     override suspend fun checkLogged(login: String, password: String): String {
         return dataSource.checkLogged(login, password)
+    }
+
+    override suspend fun register(login: String, password: String, email: String): String {
+        return dataSource.register(login, password, email)
     }
 
 }

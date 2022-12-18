@@ -20,7 +20,7 @@ interface Api {
     @POST("getSubsById")
     fun getSubsById(
         @Field("login") login: String
-    ): Deferred<List<SubsDataPOJO>>
+    ): Deferred<Any>
 
     @FormUrlEncoded
     @POST("login")
@@ -38,4 +38,12 @@ interface Api {
 
     @GET("getProviderData")
     fun getProviderData(): Deferred<ProviderDataPOJO>
+
+    @FormUrlEncoded
+    @POST("register")
+    fun register(
+        @Field("login") login: String,
+        @Field("password") password: String,
+        @Field("email") email: String,
+    ): Deferred<String>
 }

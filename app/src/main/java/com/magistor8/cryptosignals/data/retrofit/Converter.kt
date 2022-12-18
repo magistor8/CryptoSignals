@@ -1,5 +1,7 @@
 package com.magistor8.cryptosignals.data.retrofit
 
+import android.telephony.SubscriptionPlan
+import com.google.gson.internal.LinkedTreeMap
 import com.magistor8.cryptosignals.App
 import com.magistor8.cryptosignals.R
 import com.magistor8.cryptosignals.data.retrofit.entires.ProviderDataPOJO
@@ -9,6 +11,7 @@ import com.magistor8.cryptosignals.domain.entires.ProviderData
 import com.magistor8.cryptosignals.domain.entires.SignalData
 import com.magistor8.cryptosignals.domain.entires.SignalType
 import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.time.measureTime
 
 object RetrofitConverter {
 
@@ -32,7 +35,7 @@ object RetrofitConverter {
                     it.target1.toDouble(),
                     it.target2.toDouble(),
                     it.target3.toDouble(),
-                    true // Тут надо запросить права на просмотр
+                    false
                 )
             )
         }
@@ -59,12 +62,15 @@ object RetrofitConverter {
         return newList
     }
 
-    fun pojoToSubsId(subs: List<SubsDataPOJO>): List<Int> {
-        val ids : MutableList<Int> = mutableListOf()
-        subs.onEach {
-            ids.add(it.provId.toInt())
+    fun pojoToSubsId(subs: Any): List<Int> {
+        if (subs is List<*>) {
+            val ids : MutableList<Int> = mutableListOf()
+            subs.onEach {
+                ids.add((it as LinkedTreeMap<String, String>)["prov_id"]?.toInt() ?: 0)
+            }
+            return ids
         }
-        return ids
+        return emptyList()
     }
 
 }

@@ -12,6 +12,7 @@ interface LoginContract {
         object Loading : ViewState
         data class Error(val throwable: Throwable) : ViewState
         data class Logged(val message: String) : ViewState
+        data class Registered(val message: String) : ViewState
     }
 
     sealed interface Events {

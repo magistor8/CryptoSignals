@@ -29,5 +29,6 @@ class RemoteDataSource {
     suspend fun login(login: String, password: String): String = api.login(login, password).await()
     suspend fun checkLogged(login: String, password: String): String = api.checkLogged(login, password).await()
     suspend fun getSubsId(login: String): List<Int> = RetrofitConverter.pojoToSubsId(api.getSubsById(login).await())
+    suspend fun register(login: String, password: String, email: String) = api.register(login, password, email).await()
 
 }

@@ -14,7 +14,7 @@ import org.koin.core.component.inject
 class LoginFragmentViewModel : BaseViewModel(), LoginContract.ViewModelInterface, KoinComponent {
 
     private val repository : LoginRepo by inject()
-    private var loginJob: Job? = null
+    private var job: Job? = null
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         viewState.mutable().postValue(LoginContract.ViewState.Error(throwable))
@@ -30,30 +30,43 @@ class LoginFragmentViewModel : BaseViewModel(), LoginContract.ViewModelInterface
     }
 
     private fun register(login: String, email: String, password: String) {
-        viewState.mutable().postValue(LoginContract.ViewState.Loading)
-    }
-
-    private fun login(login: String, password: String) {
-        loginJob?.let {
+        job?.let {
             if (it.isActive) return
         }
         viewState.mutable().postValue(LoginContract.ViewState.Loading)
-        loginJob = viewModelScope.launch(coroutineExceptionHandler) {
+        job = viewModelScope.launch(coroutineExceptionHandler) {
+            var result = ""
+            withContext(Dispatchers.IO) {
+                result = repository.register(login, password, email)
+            }
+
+            if (result == "success") loginCached(login, password)
+            viewState.mutable().postValue(LoginContract.ViewState.Registered(result))
+        }
+    }
+
+    private fun login(login: String, password: String) {
+        job?.let {
+            if (it.isActive) return
+        }
+        viewState.mutable().postValue(LoginContract.ViewState.Loading)
+        job = viewModelScope.launch(coroutineExceptionHandler) {
             var result = ""
             withContext(Dispatchers.IO) {
                 result = repository.login(login, password)
             }
-            viewState.mutable().postValue(LoginContract.ViewState.Logged(result))
+
             if (result == "success") loginCached(login, password)
+            viewState.mutable().postValue(LoginContract.ViewState.Logged(result))
         }
     }
 
-    private fun loginCached(login: String, password: String) {
+    private suspend fun loginCached(login: String, password: String) {
         repository.loginCached(login, password)
     }
 
     override fun onCleared() {
-        loginJob = null
+        job = null
         super.onCleared()
     }
 

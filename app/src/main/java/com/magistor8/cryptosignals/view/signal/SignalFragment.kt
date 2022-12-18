@@ -75,9 +75,7 @@ class SignalFragment: BaseFragment(), KoinScopeComponent {
         when (state) {
             is SignalsContract.ViewState.Error -> Toast.makeText(context, state.throwable.message, Toast.LENGTH_SHORT).show()
             is SignalsContract.ViewState.ProviderDataLoaded -> Toast.makeText(context, "Данные загружены", Toast.LENGTH_SHORT).show()
-            is SignalsContract.ViewState.AllSignalsLoaded -> {
-                allSignalsLoaded(state)
-            }
+            is SignalsContract.ViewState.AllSignalsLoaded -> allSignalsLoaded(state)
             is SignalsContract.ViewState.Loading -> loadingScreen(VISIBLE)
         }
     }
@@ -130,7 +128,7 @@ class SignalFragment: BaseFragment(), KoinScopeComponent {
     }
 
     override fun onDetach() {
-        //scope.close()
+        scope.close()
         super.onDetach()
     }
 

@@ -48,8 +48,10 @@ class SignalFragmentViewModel : BaseViewModel(), SignalsContract.ViewModelInterf
         viewModelScope.launch(coroutineExceptionHandler) {
             withContext(Dispatchers.IO) {
                 var data = repository.getSignals(filterSettings)
-                val subsId = repository.getSubsId(App.instance.getLogin() ?: "")
-                repository.setSignalAccess(data, subsId)
+                App.instance.getLogin()?.let {
+                    val subsId = repository.getSubsId(it)
+                    repository.setSignalAccess(data, subsId)
+                }
                 viewState.mutable().postValue(SignalsContract.ViewState.AllSignalsLoaded(data))
             }
         }
